@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Custo do transporte</title>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
+      type="text/css"
+    />
+
+    <h1>Quanto gasto com transporte por mês?</h1>
+    <br />
+
+    <p>
+      Este site permite que você calcule seus gastos mensais com diferentes
+      meios de transporte, considerando a média de dias útei em um mês. Aqui, você pode
+      planejar suas rotas, obtendo uma estimativa dos custos mensais e avaliando
+      o impacto dessas despesas em seu salário.
+    </p>
+
+    <div class="container">
+      <div class="group">
+        <label for="opcoes">Selecione o tipo de transporte:</label>
+        <select id="opcoes">
+          <option value="" disabled selected hidden>Selecione</option>
+          <option value="carromais">Carro mais econômico</option>
+          <option value="carromenos">Carro menos econômico</option>
+          <option value="onibus-gratuidade">Ônibus com gratuidade</option>
+          <option value="onibus-meia" id="opcao-onibus-meia">
+            Ônibus com meia tarifa
+          </option>
+          <option value="onibus">Ônibus com tarifa comum</option>
+          <option value="uber">Uber</option>
+        </select>
+      </div>
+
+      <div class="group">
+        <label for="cidade">Selecione a capital do Nordeste:</label>
+        <select id="cidade">
+          <option value="" disabled selected hidden>Selecione</option>
+          <option value="maceio">Maceió (AL)</option>
+          <option value="salvador">Salvador (BA)</option>
+          <option value="aracaju">Aracaju (SE)</option>
+          <option value="recife">Recife (PE)</option>
+          <option value="natal">Natal (RN)</option>
+          <option value="joao-pessoa">João Pessoa (PB)</option>
+          <option value="teresina">Teresina (PI)</option>
+          <option value="fortaleza">Fortaleza (CE)</option>
+          <option value="sao-luis">São Luís (MA)</option>
+        </select>
+      </div>
+
+      <div class="group">
+        <div id="opcoes-onibus-gratuidade" style="display: none">
+          <label for="passagens-gratuidade"
+            >Quantas passagens você utiliza por dia?</label
+          >
+          <input type="number" id="passagens-gratuidade" />
+        </div>
+      </div>
+
+      <div class="group" id="opcao-combustivel">
+        <label for="destino">Preço do Combustível:</label>
+        <input
+          type="text"
+          id="combustivel"
+          placeholder="Valor do combustível em R$"
+        />
+      </div>
+
+      <div class="group" id="opcoes-uber" style="display: none">
+        <label for="distancia-uber">Distância (em km):</label>
+        <input type="number" id="distancia-uber" />
+      </div>
+
+      <div class="group">
+        <label for="salario">Informe seu salário:</label>
+        <input type="number" id="salario" placeholder="Valor em R$" />
+      </div>
+    </div>
+  </div>
+
+    <p id="instrucao">Insira os endereços no mapa</p>
+    <div class="map-container">
+      <div id="map" style="display: initial"></div>
+    </div>
+
+    <button onclick="calcularImpactoSalarial()">Calcular</button>
+
+    <p id="resultado"></p>
+
+    <canvas id="grafico"></canvas>
+
+    <h3>Entenda a metodologia</h3>
+    <p>
+      Para calcular o valor gasto por mês e o impacto salarial com a utilização
+      do transporte público ou particular nas capitais do Nordeste, utilizamos
+      algumas variáveis:
+    </p>
+    <ul>
+      <li data-highlight="Carro mais econômico:">
+        Foi utilizado como referência o Kwid, carro da marca Renault, que
+        atualmente é um dos mais baratos e mais econômicos vendidos no Brasil.
+        Neste caso, foram levados em consideração a depreciação do veículo por
+        mês, consumo médio, manutenção, IPVA e seguro.
+      </li>
+      <li data-highlight="Carro menos econômico:">
+        O Jeep Compass é o carro do modelo SUV mais vendidos no Brasil, por isso
+        foi escolhido para a categoria de carro menos econômico. Neste caso,
+        foram levados em consideração a depreciação do veículo por mês, consumo
+        médio, manutenção, IPVA e seguro.
+      </li>
+      <li data-highlight="Ônibus com gratuidade:">
+        Idosos, estudantes e pessoas com deficiência ou comorbidades podem
+        utilizar o transporte público sem pagar. Em algumas capitais outros
+        grupos também podem ter acesso ao benefício.
+      </li>
+      <li data-highlight="Ônibus com meia tarifa:">
+        Alguns grupos, como estudantes e professores, por exemplo, têm direito a
+        pagar o valor de meia passagem.
+      </li>
+      <li data-highlight="Ônibus com tarifa comum:">
+        Valor da tarifa completa do ônibus.
+      </li>
+      <li data-highlight="Uber:">
+        No caso do Uber, foram calculadas 100 rotas possíveis, com uma variação
+        de quilometragem menor que 1km a 100 km. As médias do valores obtidos
+        foram usados para fazer o cálculo, que não leva em consideração
+        possíveis variáveis, como tarifa dinâmica ou descontos.
+      </li>
+    </ul>
+
+    <p>
+      Após selecionar a opção, basta preencher as informações solicitadas e
+      calcular o impacto mensal no salário com esses tipos de transporte. Foram
+      considerados 21 dias, que é a média de dias úteis por mês. Vale ressaltar
+      que os valores são estiados e algumas variáveis podem elevar o reduzir o
+      valor total que o usuário gasta por mês com transporte e impacto salarial.
+    </p>
+
+    <script src="script.js"></script>
+  </body>
+</html>
