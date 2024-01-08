@@ -1,0 +1,195 @@
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  background-color: #dce731;
+  color: black;
+  padding: 0.6em;
+  font-size: 30px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  width: fit-content;
+  margin-right: 200px;
+}
+button {
+  background-color: #890ab2;
+  color: white;
+  border-radius: 1em;
+  padding: 0.8em;
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+  outline: #dce731;
+  text-transform: uppercase;
+  border-color: transparent;
+  margin-top: 20px;
+}
+. .opcoes {
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  background-color: #e2a9f3;
+}
+.cidade {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+body {
+  background-color: #f2f2f2;
+  padding: 10px;
+  border: 1px solid #e4e4e4;
+  border-radius: 10px;
+  font-family: "Poppins", sans-serif;
+  text-align: left;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+label {
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+  margin-top: 1em;
+}
+
+input {
+  border-radius: 0.8em;
+  padding: 0.4em 0.6em;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  background-color: #f2f2f2;
+  border: 2px solid #890ab2;
+}
+
+option {
+  border-radius: 0.8em;
+  padding: 0.4em 0.6em;
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+  background-color: #f2f2f2;
+  margin-bottom: 5px;
+}
+
+select {
+  border-radius: 0.8em;
+  padding: 0.4em 0.4em;
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+  background-color: #f2f2f2;
+  border: 2px solid #890ab2;
+  margin-bottom: 1em;
+}
+.group {
+  display: flex;
+  flex-direction: column;
+}
+h3 {
+  background-color: #dce731;
+  color: black;
+  padding: 0.4em 0.6em;
+  font-size: 28px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  width: fit-content;
+  margin-top: 10px;
+}
+
+p {
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+  background-color: #f2f2f2;
+}
+
+ul li::before {
+  content: attr(data-highlight);
+  font-weight: bold;
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+  color: #890ab2;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  line-height: 2;
+}
+
+.map-container {
+  width: 100%;
+  height: 300px;
+  position: relative;
+  margin: 1rem auto;
+}
+
+#map {
+  display: block;
+  width: 500px;
+  max-width: 500px;
+  height: 300px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.mapboxgl-ctrl-geocoder--input {
+  font-size: 16 px !important;
+}
+
+.mapboxgl-ctrl-geocoder:first-of-type {
+  z-index: 2;
+}
+
+#grafico {
+  max-width: 500px;
+
+  display: block;
+}
+
+#grafico .chartjs-render-monitor .chartjs-color-0 {
+  background-color: #dce731;
+}
+
+#grafico .chartjs-render-monitor .chartjs-color-1 {
+  background-color: #890ab2;
+}
+
+/* styles.css */
+
+.chart-title {
+  font-size: 28px;
+  color: #yellow;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  /* Adicione mais estilos conforme necessário */
+}
+#instrucao {
+  display: block;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+}
+
+.container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.group {
+  display: flex;
+  flex-direction: column; /* Mude para 'row' para organizar em linha */
+  margin-bottom: 10px; /* Adicione margem na parte inferior para separar os grupos */
+}
+
+.group label,
+.group select,
+.group input {
+  margin-bottom: 10px; /* Adicione margem inferior para separar os elementos */
+}
+
+.group select,
+.group input {
+  width: 100%; /* Garanta que os selects e inputs ocupem toda a largura disponível */
+}
